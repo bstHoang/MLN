@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tôn Giáo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none; 
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none; 
+            scrollbar-width: none; 
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="fixed inset-0 bg-black/10 z-0" id="background-overlay"></div>
+
+    <div class="container mx-auto max-w-7xl p-4 lg:p-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <main class="lg:col-span-2 bg-white rounded-lg shadow-xl overflow-hidden">
+                <div class="p-6 md:p-10">
+                    <h1 id="image-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 transition-all duration-300 ease-in-out">
+                    </h1>
+
+                    <div class="mb-6">
+                        <img id="main-image" src="" alt="" class="w-full h-auto max-h-[65vh] object-contain rounded-lg shadow-md transition-all duration-300 ease-in-out">
+                    </div>
+
+                    <div id="image-description" class="text-base md:text-lg text-gray-700 leading-relaxed transition-all duration-300 ease-in-out">
+                    </div>
+                </div>
+            </main>
+
+            <aside class="lg:col-span-1 bg-white p-6 rounded-lg shadow-xl h-fit sticky top-8">
+                <h2 class="text-2xl font-semibold mb-6 border-b pb-4">Nội Dung</h2>
+                <div id="menu-container" class="space-y-4 max-h-[60vh] overflow-y-auto no-scrollbar">
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const galleryData = [
+                {
+                    id: 1,
+                    title: 'Bản chất của tôn giáo',
+                    description: 'Dưới góc nhìn của Chủ nghĩa Mác - Lênin, tôn giáo là một hình thái ý thức xã hội, do con người sáng tạo ra để phản ánh hư ảo hiện thực khách quan, bắt nguồn từ cơ sở kinh tế và mang thế giới quan duy tâm. Tuy nhiên, quan điểm mácxít tôn trọng quyền tự do tín ngưỡng và ghi nhận khả năng hợp tác vì một xã hội tốt đẹp. Về mặt thực thể xã hội, tôn giáo bao gồm các yếu tố như niềm tin siêu nhiên, giáo lý, cơ sở thờ tự, tổ chức và tín đồ. Cần phân biệt tôn giáo với tín ngưỡng (như thờ cúng tổ tiên, thờ Mẫu) vốn là hệ thống niềm tin vào các lực lượng linh thiêng. Trái ngược hoàn toàn với hai khái niệm trên là mê tín dị đoan, được định nghĩa là niềm tin mê muội, cuồng tín, không khoa học, dẫn đến các hành vi cực đoan, sai lệch, gây hại cho xã hội.',
+                    imageUrl: 'BanChat.jpg',
+                    backgroundImageUrl: 'BanChat1.1.jpg' 
+                },
+                {
+                    id: 2,
+                    title: 'Nguồn gốc tự nhiên, kinh tế - xã hội ',
+                    description: 'Trong xã hội công xã nguyên thu , do lực lượng sản xuất chưa phát triển, trước thiên nhiên hùng vĩ tác động và chi phối khiến cho con người cảm thấy yếu đuối và bất lực, không giải thích được, nên con người đã gán cho tự nhiên những sức mạnh, quyền lực thần bí.Khi xã hội xuất hiện các giai cấp đối kháng, có áp bức bất công, do không giải thích được nguồn gốc của sự phân hoá giai cấp và áp bức bóc lột bất công, tội ác v.V..., cộng với lo sợ trước sự thống trị của các lực lượng xã hội, con người trông chờ vào sự giải phóng của một lực lượng siêu nhiên ngoài trần thế. ',
+                    imageUrl: 'NguonGoc1.jpg',
+                    backgroundImageUrl: 'NguonGoc1.1.jpg' 
+                },
+                {
+                    id: 3,
+                    title: 'Nguồn gốc nhận thức',
+                    description: 'Ở một giai đoạn lịch sử nhất định, sự nhận của con người về tự nhiên, xã hội và chính bản thân mình là có giới hạn. Khi mà khoảng cách giữa “biết” và “chưa biết" vẫn tồn tại,khi những điều mà khoa học chưa giải thích được, thì điều đó thường được giải thích thông qua lăng kính các tôn giáo. Ngay cả những vấn đề được khoa học chứng minh, nhưng do trình độ dân trí thấp, chưa thể nhận thức đầy đủ, thì đây vẫn là điều kiện, là mảnh đất cho tôn giáo ra đời, tồn tại và phát triển. Thực chất nguồn gốc nhận thức của tôn giáo chính là sự tuyệt đối hoá, sự cường điệu mặt chủ thể của nhận thức con người biến cái nội dung khách quan thành cái siêu nhiên, thần thánh.',
+                    imageUrl: 'NguonGoc2.jpg',
+                    backgroundImageUrl: 'NguonGoc21.jpg'
+                },
+                {
+                    id: 4,
+                    title: 'Nguồn gốc tâm lý',
+                    description: 'Sự sợ hãi trước những hiện tượng tự nhiên, xã hội, hay trong những lúc ốm đau, bệnh tật; ngay cả những may, rủi bất ngờ xảy ra, hoặc tâm lý muốn được bình yên khi làm một việc lớn (ví dụ: ma chay, cưới xin, làm nhà, khởi đầu sự nghiệp kinh doanh...), con người cũng dễ tìm đến với tôn giáo. Thậm chí cả những tình cảm tích cực như tình yêu, lòng biết ơn, lòng kính trọng đối với những người có công với nước, với dân cũng dễ dẫn con người đến với tôn giáo (ví dụ: thờ các anh hùng dân tộc, thờ các thành hoàng làng...).',
+                    imageUrl: 'NguonGoc3.jpg',
+                    backgroundImageUrl: 'NguonGoc31.jpg' 
+                },
+                {
+                    id: 5,
+                    title: 'Tính lịch sử của tôn giáo',
+                    description: 'Tôn giáo là một hiện tượng xã hội có tính lịch sử, nghĩa là nó có sự hình thành, tồn tại và phát triển và có khả năng biến đổi trong những giai đoạn lịch sử nhất định để thích nghi với nhiều chế độ chính trị - xã hội. Khi các điều kiện kinh tế –xã hội, lịch sử thay đổi, tôn giáo cũng có sự thay đổi theo. Trong quá trình vận động của các tôn giáo, chính các điều kiện kinh tế - xã hội lịch sử cụ thể đã làm cho các tôn giáo bị phân liệt, chia tách thành nhiều tôn giáo, hệ phái khác nhau.Theo quan điểm của chủ nghĩa Mác - Lênin, đến một giai đoạn lịch lịch sử nào đó, khi khoa học và giáo dục giúp cho đại đa số quần chúng nhân dân nhận thức được bản chất các hiện tượng tự nhiên và xã hội thì tôn giáo sẽ dần dần mất đi vị trí của nó trong đời sống sống xã hội và cả trong nhận thức, niềm tin của mỗi người.',
+                    imageUrl: 'TinhChat1.jpg',
+                    backgroundImageUrl: 'TinhChat11.jpg'
+                },
+                {
+                    id: 6,
+                    title: 'Tính quần chúng của tôn giáo',
+                    description: 'Tôn giáo là một hiện tượng xã hội phổ biến ở tất cả các dân tộc, quốc gia, châu lục. Tính quần chúng của tôn giáo không chỉ biểu hiện ở số lượng tín đồ rất đông đảo (gần 3/4 dân số thế giới); mà còn thể hiện ở chỗ, các tôn giáo là nơi sinh hoạt văn hóa, tinh thần của một bộ phận quần chúng nhân dân. Dù tôn giáo hướng con người vào niềm tin hạnh phúc hư ảo của thế thế giới bên kia, song nó luôn luôn phản ánh khát vọng của những người lao động về một xã hội tự do, bình đẳng, bác ái. Mặt khác, nhiều tôn giáo có tính nhân văn, nhân đạo và hướng thiện, vì vậy, được nhiều người ở các tầng lớp khác nhau trong xã hội, đặc biệt là quần chúng lao động, tin theo.',
+                    imageUrl: 'TinhChat2.jpg',
+                    backgroundImageUrl: 'TinhChat21.jpg'
+                },
+                {
+                    id: 7,
+                    title: 'Tính chính trị của tôn giáo',
+                    description: 'Khi xã hội chưa có giai cấp, tôn giáo chỉ phản ánh nhận thức hồn nhiên, ngây thơ của con về bản thân về thế giới xung quanh mình , tôn giáo chưa mang tính chính trị. Tính chất chính trị của tôn giáo chỉ xuất hiện khi xã hội đã phân chia giai cấp, có sự khác biệt, sự đối kháng về lợi ích giai gia cấp. Trước hết, do tôn giáo là sån phâm của những điều kiện kinh tế - xã hội, phản ánh lợi ích, nguyện vọng của các giai cấp khác nhau trong cuộc đấu tranh giai cấp, đấu tranh dân tộc, nên tôn giáo mang tính chính trị. Mặt khác, khi các giai cấp bóc lột, thống trị sử dụng tôn giáo để phục vụ cho lợi ích giai cấp mình, chống lại các giai cấp lao động và tiến bộ xã hội, tôn giáo mang tính chính trị tiêu cực, phản tiến bộ. Vì vậy, cần nhận thức rõ ràng, đa số quần chúng tín đồ đến với tôn giáo nhằm thoả mãn nhu cầu tinh thần; song, trên thực tế, tôn giáo đã và đang bị các thế lực chính trị - xã hội lợi dụng nhằm thực hiện mục đích ngoài tôn giáo của họ.',
+                    imageUrl: 'TinhChat3.jpg',
+                    backgroundImageUrl: 'TinhChat3.jpg'
+                },
+                {
+                    id: 8,
+                    title: 'Việt Nam là một quốc gia có nhiều tôn giáo',
+                    description: 'Nước ta hiện nay có 13 tôn giáo đã được công nhận tư cách pháp nhân và trên 40 tổ chức tôn giáo đã được công nhận về mặt tổ chức hoặc đã đăng ký hoạt động với khoảng 24 triệu tín đồ, 95.000 chức sắc, 200.000 chức việc và hơn 23.250 cơ sở thờ tự. Các tổ chức tôn giáo có nhiều hình thức tồn tại khác nhau. Có tôn giáo du nhập từ bên ngoài, với những thời điểm, hoàn cảnh khác nhau, như Phật giáo, Công Giáo, Tin lành, Hồi  giáo; có tôn giáo nội sinh , như Cao Đài , Hòa Hảo. ',
+                    imageUrl: 'DacDiem1.jpg',
+                    backgroundImageUrl: 'DacDiem11.jpg'
+                },
+                {
+                    id: 9,
+                    title: 'Tôn giáo ở Việt Nam đa dạng , đan xen, chung sống hòa bình và không có xung đột, chiến tranh tôn giáo',
+                    description: 'Việt Nam là nơi giao lưu của nhiều luồng văn hóa thế giới. Các tôn giáo ở Việt Nam có sự đa dạng về nguồn gốc và truyền thống lịch sử. Mỗi tôn giáo ở Việt Nam có quá trình lịch sử tồn tại và phát triển khác nhau, nên sự gắn bó với dân tộc cũng khác nhau. Tín đồ của các tôn giáo khác nhau cùng chung sống hòa bình trên một địa bàn, giữa họ có sự tôn trọng niềm tin của nhau và chưa từng xảy ra xung đột, chiến tranh tôn giáo. Thực tế cho thấy, không có một tôn giáo nào du nhập vào Việt Nam mà không mang dấu ấn, không chịu ảnh ảnh hưởng của bản sắc văn hóa Việt Nam.',
+                    imageUrl: 'DacDiem2.jpg',
+                    backgroundImageUrl: 'DacDiem21.jpg'
+                },
+                {
+                    id: 10,
+                    title: 'Tín đồ các tôn giáo Việt Nam phần lớn là nhân dân lao động, có lòng yêu nước, tinh thần dân tộc',
+                    description: 'Tín đồ các tôn giáo Việt Nam có thành phần rất đa dạng, chủ yếu là người lao động... Đa số tín đồ các tôn giáo đều có tinh thần yêu nước, chống giặc ngoại xâm, tôn trọng công lý, gắn bó với dân tộc, đi theo Đảng, theo cách mạng, hăng hái tham gia xây dựng và bảo vệ Tổ quốc Việt Nam. Trong các giai đoạn lịch sử, tín đồ các tôn giáo cùng với các tầng lớp nhân dân làm nên những thắng lợi to lớn, vẻ vang của dân tộc và có ước vọng sống “tốt đời, đẹp đạo”.',
+                    imageUrl: 'DacDiem3.jpg',
+                    backgroundImageUrl: 'DacDiem31.jpg'
+                },
+                {
+                    id: 11,
+                    title: 'Hàng ngũ chức sắc các tôn giáo có vai trò, vị trí quan trọng trong giáo hội, có uy tín, ảnh hưởng với tín đồ ',
+                    description: 'Chức sắc tôn giáo là tín đồ có chức vụ, phẩm sắc trong tôn giáo, họ tự nguyện thực hiện thường xuyên nếp sống riêng theo giáo lý, giáo luật của tôn giáo mà mình tin theo. Về mặt tôn giáo, chức năng của họ là truyền bá, thực hành giáo lý, giáo luật, lễ nghi, quản lý tổ chức của tôn giáo, duy trì, củng cố, phát triển tôn giáo, chuyên lo đến đời sống tâm linh của tín đồ. Trong giai đoạn hiện nay, hàng ngũ chức sắc các tôn giáo ở Việt Nam luôn chịu sự tác động của tình hình chính trị - xã hội trong và ngoài nước, nhưng nhìn chung xu hướng tiến bộ trong hàng ngũ chức sắc ngày càng phát triển ',
+                    imageUrl: 'DacDiem4.jpg',
+                    backgroundImageUrl: 'DacDiem41.jpg'
+                },
+                {
+                    id: 12,
+                    title: ' Các tôn giáo ở Việt Nam đều có quan hệ với các tổ chức, cá nhân tôn giáo ở nước ngoài ',
+                    description: 'Nhìn chung các tôn giáo ở nước ta, không chỉ các tôn giáo ngoại nhập, mà cả các tôn giáo nội sinh đều có quan hệ với các tổ chức, cá nhân tôn giáo ở nước ngoài hoặc các tổ chức tôn giáo quốc tế. Đặc biệt trong giai đoạn hiện nay, Nhà nước Việt Nam đã thiết lập quan hệ ngoại giao với gần 200 quốc gia và vùng lãnh thổ trên toàn thế giới. Đây chính là điều kiện gián tiếp củng cố và phát sinh mối quan hệ giữa các tôn giáo Việt Nam với tôn giáo ở các nước trên thế giới. Vì vậy, việc giải quyết vấn đề tôn giáo ở Việt Nam phải đảm bảo kết hợp giữa mở rộng giao giao lưu hợp tác quốc tế với việc đảm đảm độc lập, chủ quyền, không để cho kẻ địch lợi dụng dân chủ, nhân quyền, tự do tôn giáo để chống phá, can thiệp vào công việc nội bộ của Nhà nước Việt Nam nhằm thực hiện âm mưu “diễn biến hòa bình” đối với nước ta.',
+                    imageUrl: 'DacDiem5.jpg',
+                    backgroundImageUrl: 'DacDiem51.jpg'
+                },
+                {
+                    id: 13,
+                    title: 'Tín ngưỡng, tôn giáo là nhu cầu tinh thần của một bộ phận nhân dân, đang và sẽ tồn tại cùng dân tộc trong quá trình xây dựng chủ nghĩa xã hội ở nước ta',
+                    description: 'Đảng ta khẳng định, tín ngưỡng, tôn giáo sẽ tồn tại lâu dài cùng dân tộc trong quá trình xây dựng chủ nghĩa xã hội. Sự khẳng định đó mang tính khoa học và cách mạng, hoàn toàn khác với cách nhìn nhận chủ quan, tả khuynh khi cho rằng có thể bằng các biện pháp hành chính, hay khi trình độ dân trí cao, đời sống vật chất được bảo đảm là có thể làm cho tín ngưỡng, tôn giáo mất đi; hoặc duy tâm, hữu khuynh khi nhìn nhận tín ngưỡng, tôn giáo là hiện tượng bất biến, độc lập, thoát ly với mọi cơ sở kinh tế - xã hội thể chế chính trị. Vì vậy, thực hiện nhất quán chính sách tôn trọng và bảo đảm quyền tự do tín ngưỡng, theo hoặc không theo một tín ngưỡng, tôn giáo nào, quyền sinh hoạt tín ngưỡng , tôn giáo bình thường theo đúng pháp luật . Các giáo hoạt động trong khuôn khổ pháp luật, bình đẳng trước pháp luật.',
+                    imageUrl: 'ChinhSach1.jpg',
+                    backgroundImageUrl: 'ChinhSach11.jpg'
+                },
+                {
+                    id: 14,
+                    title: 'Đảng, Nhà nước thực hiện nhất quán chính sách đại đoàn kết dân tộc.',
+                    description: 'Đoàn kết đồng bào theo các tôn giáo khác nhau; đoàn kết đồng bào theo tôn giáo và đồng bào không theo tôn giáo. Nhà nước xã hội chủ nghĩa, một mặt, nghiêm cấm mọi hành vi chia rẽ, phân biệt đối xử với công dân vì lý do tín ngưỡng, tôn giáo; mặt khác, thông qua quá trình vận động quần chúng nhân dân tham gia lao động sản xuất, hoạt động xã hội thực tiễn, nâng cao đời sống vật chất, tinh thần, nâng cao trình độ kiến thức... để tăng cường sự đoàn kết kết vì mục tiêu “dân giàu, nước mạnh, dân chủ, |công bằng, văn minh, để cùng nhau xây dựng và bảo vệ Tổ quốc xã hội chủ nghĩa. Mọi công dân không phân biệt tín ngưỡng, tôn giáo, đều có quyền và nghĩa vụ xây dựng, bảo vệ Tổ quốc. Giữ gìn và phát huy những giá trị tích cực của truyền thống thờ cúng tổ tiên, tôn vinh những người có công với Tổ quốc và nhân dân. Đồng thời, nghiêm cấm lợi dụng tín ngưỡng, tôn giáo để hoạt động mê tín dị đoan, hoạt động trái pháp luật và chính sách của Nhà Nước, kích động chia rẽ nhân dân, chia rẽ các dân tộc, gây rối, xâm phạm an ninh quốc quốc gia.',
+                    imageUrl: 'ChinhSach2.jpg',
+                    backgroundImageUrl: 'ChinhSach21.jpg'
+                },
+                {
+                    id: 15,
+                    title: 'Nội dung cốt lõi của công tác tôn giáo là công tác vận động quần chúng.',
+                    description: 'Công tác vận động quần chúng các tôn giáo nhằm động viên đồng bào nêu cao tinh thần yêu nước, ý thức bảo vệ độc lập và thống nhất đất nước thông qua việc thực hiện tốt các chính sách kinh tế - xã hội, hội, an ninh, quốc phòng, bảo đảm lợi ích vật chất và tinh thần của nhân dân nói chung, trong đó có đồng bào tôn giáo. Đẩy mạnh phát triển kinh tế, xã hội, văn hóa vùng đồng bào theo các tôn giáo, nhằm nâng cao trình độ, đời sống mọi mặt cho đồng bào, làm cho quần chúng nhân dân nhận thức đầy đủ, đúng đắn đường lối, chính sách của Đảng, pháp luật của Nhà nước, tích cực, nghiêm chỉnh thực hiện đường lối, chính sách, pháp luật, trong đó có chính sách, pháp luật về tín ngưỡng, tôn giáo.',
+                    imageUrl: 'ChinhSach3.jpg',
+                    backgroundImageUrl: 'ChinhSach31.jpg'
+                },
+                {
+                    id: 16,
+                    title: 'Công tác tôn giáo là trách nhiệm của cả hệ thống chính trị.',
+                    description: 'Công tác tôn giáo có liên quan đến nhiều lĩnh vực của đời sống xã hội, các cấp, các ngành các địa bàn, liên quan đến chính sách đối nội và đối ngoại của Đảng, Nhà nước. Công tác tôn giáo không chỉ liên quan đến quần chúng tín đồ, chức sắc của các tôn giáo, mà còn gắn liền với công tác đấu tranh với âm mưu, hoạt động lợi dụng tôn giáo gây phương hại đến lợi ích Tổ quốc, dân tộc. Làm tốt công tác tôn giáo là trách nhiệm của toàn bộ hệ thống chính trị, bao gồm hệ thống tổ chức đảng, chính quyền, mặt trận Tổ quốc, đoàn thể chính trị do Đảng lãnh đạo. Cần củng cố và kiện toàn tổ chức bộ máy và đội ngũ cán bộ chủ chuyên trách làm công tác tôn giáo các cấp. Tăng cường công tác quản lý nhà nước đối với các tôn giáo và đấu tranh với hoạt động lợi dụng tôn giáo gây phương hại đến lợi ích Tổ quốc và dân tộc.',
+                    imageUrl: 'ChinhSach4.jpg',
+                    backgroundImageUrl: 'ChinhSach41.jpg'
+                },
+                {
+                    id: 17,
+                    title: 'Vấn đề theo đạo và truyền đạo.',
+                    description: 'Mọi tín đồ đều có quyền tự do hành đạo tại gia đình và cơ sở thờ tự thờ tự hợp pháp theo quy định của pháp luật. Các tổ chức tôn giáo đều được Nhà nước thừa nhận được hoạt động theo pháp luật và được pháp luật bảo hộ. Việc theo đạo, truyền đạo cũng như mọi hoạt động tôn giáo khác đều phải tuân thủ Hiến pháp và pháp luật; không được lợi dụng tôn giáo để tuyên truyền tà đạo, hoạt động mê tín dị đoan, không được ép buộc người dân theo đạo. Nghiêm cấm các tổ chức truyền đạo, người truyền đạo và có các cách thức truyền đạo trái phép, vi phạm các quy định của Hiến pháp và pháp luật. ',
+                    imageUrl: 'ChinhSach5.jpg',
+                    backgroundImageUrl: 'ChinhSach51.jpg'
+                },
+                {
+                    id: 18,
+                    title: 'Việt Nam là một quốc gia đa dân tộc, đa tôn giáo; quan hệ dân tộc tộc và tôn giáo được thiết lập và củng cố trên cơ sở cộng đồng quốc gia – dân tộc thống nhất',
+                    description: 'Các tôn giáo ở ViệtNam, trong lịch sử và hiện tại, có truyền thống gắn bó chặt chẽ và đồng hành cùng dân tộc ("gắn đạo với đời"), tạo nên sự đoàn kết dân tộc thống nhất. Điều này tương phản với bối cảnh xung đột dân tộc, tôn giáo ở nhiều nơi trên thế giới. Kể từ khi độc lập, dưới sự lãnh đạo của Đảng Cộng sản Việt Nam, mối quan hệ dân tộc và tôn giáo nhìn chung được giải quyết tốt, không dẫn đến xung đột lớn, ngoại trừ giai đoạn bị thực dân Pháp và đế quốc Mỹ lợi dụng. Tuy nhiên, trong thực tiễn vẫn có lúc nảy sinh mâu thuẫn do nhận thức hoặc thực hiện chính sách chưa đúng. Vì vậy, cần phải nhận diện và tiếp tục giải quyết tốt mối quan hệ này nhằm vừa phát huy các giá trị văn hóa, đạo đức tốt đẹp, vừa đảm bảo sự ổn định chính trị quốc gia.',
+                    imageUrl: 'QuanHe1.jpg',
+                    backgroundImageUrl: 'QuanHe11.jpg'
+                },
+                {
+                    id: 19,
+                    title: ' Quan hệ dân tộc và tôn giáo ở Việt Nam chịu sự chi phối mạnh mẽ bởi tín ngưỡng truyền thống',
+                    description: 'Tín ngưỡng truyền thống ở Việt Nam, đặc biệt là việc thờ cúng tổ tiên và các anh hùng dân tộc, đóng vai trò quan trọng trong đời sống tâm linh và được biểu hiện ở nhiều cấp độ. Ở cấp độ gia đình, nó là nét đẹp văn hóa gắn kết dòng họ; ở cấp độ làng xã, việc thờ Thành hoàng liên kết cộng đồng; và ở cấp độ quốc gia, tín ngưỡng thờ cúng Vua Hùng là đỉnh cao của sự đoàn kết, hội tụ mọi người Việt hướng về cội nguồn dân tộc chung. Hệ thống tín ngưỡng này không chỉ tạo nên nét đặc thù cho quan hệ dân tộc - tôn giáo ở Việt Nam mà còn chi phối mạnh mẽ, buộc các tôn giáo ngoại sinh (như Nho giáo, Phật giáo, Công giáo) phải biến đổi để phù hợp với văn hóa bản địa khi du nhập.',
+                    imageUrl: 'QuanHe21.jpg',
+                    backgroundImageUrl: 'QuanHe21.jpg'
+                },
+                {
+                    id: 20,
+                    title: 'Các hiện tượng tôn giáo mới có xu hướng phát triển mạnh tác động đến đời sống cộng đồng và khối đại đoàn kết toàn dân tộc',
+                    description: 'Từ khi đất nước thực hiện đường lối đổi mới toàn diện, kinh tế thị trường, toàn cầu hóa và hội nhập quốc tế sâu rộng thì đời sống tín ngưỡng, tôn giáo của người Việt Nam phát triển, trong đó xuất hiện một số hiện tượng tôn giáo mới và các tổ chức đội lốt tôn giáo. Tính chất mê tín của các hiện tượng tôn giáo mới khá rõ. Thậm chí, một số nhóm lợi dụng niềm tin tôn giáo đề tuyên truyền những nội dung gây hoang mang trong quần quần chúng, hay thực hành những nghi lễ phản văn hóa, truyền đạo trái phép, phát tán các tài liệu có nội dung xuyên tạc đường lối, chính sách của Đảng và Nhà nước, làm tổn hại đến mối quan hệ đại đoàn kết dân tộc và tôn giáo, làm ảnh hưởng đến khối đại đoàn kết dân tộc, đoàn kết tôn giáo; gây ra nhiều vấn đề phức tạp và tác động tiêu cực đến tình hình an ninh chính trị, trật tự an toàn xã hội ở nhiều vùng dân tộc. Do vậy, các hiện tượng tôn giáo mới phát triển mạnh hiện nay cần phải được quản lý tốt nhằm đảm bảo sự ổn định chính trị quốc gia và đảm bảo giải quyết tốt mối quan hệ dân tộc và tôn giáo ở nước ta.',
+                    imageUrl: 'QuanHe3.jpg',
+                    backgroundImageUrl: 'QuanHe31.jpg'
+                }
+            ];
+
+            let currentImageId = null; 
+            const imageTitle = document.getElementById('image-title');
+            const mainImage = document.getElementById('main-image');
+            const imageDescription = document.getElementById('image-description');
+            const menuContainer = document.getElementById('menu-container');
+            const backgroundOverlay = document.getElementById('background-overlay');
+            
+            const animatedElements = [imageTitle, mainImage, imageDescription];
+
+            function populateMenu() {
+                menuContainer.innerHTML = ''; 
+                galleryData.forEach(item => {
+                    const menuItem = document.createElement('div');
+                    menuItem.className = 'menu-item flex items-center space-x-4 p-3 rounded-lg cursor-pointer transition-all duration-200 hover:bg-gray-100';
+                    menuItem.dataset.id = item.id; 
+
+                    const thumb = document.createElement('img');
+                    thumb.src = item.imageUrl;
+                    thumb.alt = item.title;
+                    thumb.className = 'w-16 h-16 object-cover rounded-md flex-shrink-0';
+                    thumb.onerror = () => {
+                        thumb.src = `https://placehold.co/100/f3f4f6/9ca3af?text=Lỗi`;
+                    };
+
+                    const title = document.createElement('span');
+                    title.textContent = item.title;
+                    title.className = 'font-medium text-gray-700';
+
+                    menuItem.appendChild(thumb);
+                    menuItem.appendChild(title);
+
+                    menuItem.addEventListener('click', () => {
+                        displayContent(item.id);
+                    });
+
+                    menuContainer.appendChild(menuItem);
+                });
+            }
+
+            function updateActiveMenu() {
+                const menuItems = document.querySelectorAll('.menu-item');
+                menuItems.forEach(item => {
+                    if (item.dataset.id == currentImageId) {
+                        item.classList.add('bg-sky-100', 'border-l-4', 'border-sky-500');
+                        item.querySelector('span').classList.add('font-semibold', 'text-sky-700');
+                        
+                        item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    } else {
+                        item.classList.remove('bg-sky-100', 'border-l-4', 'border-sky-500');
+                        item.querySelector('span').classList.remove('font-semibold', 'text-sky-700');
+                    }
+                });
+            }
+
+            function displayContent(id) {
+                if (id === currentImageId) return;
+
+                const item = galleryData.find(d => d.id === id);
+                if (!item) return; 
+
+                animatedElements.forEach(el => {
+                    el.classList.add('opacity-0', 'scale-95');
+                });
+
+                setTimeout(() => {
+                    imageTitle.textContent = item.title;
+                    mainImage.src = item.imageUrl;
+                    mainImage.alt = item.title;
+                    imageDescription.textContent = item.description;
+                    
+                    if (item.backgroundImageUrl) {
+                        document.body.style.backgroundImage = `url('${item.backgroundImageUrl}')`;
+                        document.body.style.backgroundSize = 'cover';
+                        document.body.style.backgroundPosition = 'center';
+                        document.body.style.backgroundAttachment = 'fixed'; 
+                        backgroundOverlay.style.opacity = 1; 
+                    } else {
+                        document.body.style.backgroundImage = 'none';
+                        backgroundOverlay.style.opacity = 0;
+                    }
+                    
+                    currentImageId = id;
+
+                    updateActiveMenu();
+
+                    animatedElements.forEach(el => {
+                        el.classList.remove('opacity-0', 'scale-95');
+                    });
+                }, 300); 
+            }
+
+            function init() {
+                backgroundOverlay.style.opacity = 0;
+                backgroundOverlay.style.transition = 'opacity 0.5s ease-in-out';
+
+                populateMenu();
+                if (galleryData.length > 0) {
+                    displayContent(galleryData[0].id);
+                }
+            }
+
+            init();
+        });
+    </script>
+</body>
+</html>
